@@ -6,7 +6,7 @@ import { Team } from './team.entity';
 
 @Injectable()
 export class TeamRepository extends CrudRepository<Team> {
-  protected entityName = 'Team';
+  entityName = 'Team';
 
   constructor(@InjectDataSource() dataSource: DataSource) {
     super(Team, dataSource);

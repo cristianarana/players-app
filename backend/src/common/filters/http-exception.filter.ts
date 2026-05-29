@@ -18,7 +18,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       });
     }
 
-    const error = exception as Error;
     return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: 'Error interno del servidor',

@@ -24,7 +24,8 @@ export abstract class BaseRepository<T extends PersonBase> extends CrudRepositor
         await queryRunner.release();
       }
     } catch (error) {
-      return { success: false, message: `Error al eliminar ${this.entityName}`, error: error.message };
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, message: `Error al eliminar ${this.entityName}`, error: msg };
     }
   }
 
@@ -51,7 +52,8 @@ export abstract class BaseRepository<T extends PersonBase> extends CrudRepositor
       const entities = await this.find({ where, take: 20 });
       return { success: true, message: `${this.entityName}(s) encontrado(s)`, data: entities };
     } catch (error) {
-      return { success: false, message: `Error al buscar ${this.entityName}`, error: error.message };
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, message: `Error al buscar ${this.entityName}`, error: msg };
     }
   }
 }

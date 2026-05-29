@@ -2,14 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PlayerRepository } from './player.repository';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
-import { Player } from './player.entity';
 
 @Injectable()
 export class PlayerService {
   constructor(private readonly playerRepository: PlayerRepository) {}
 
   async create(dto: CreatePlayerDto) {
-    const result = await this.playerRepository.create(dto as any);
+    const result = await this.playerRepository.createEntity(dto as any);
     if (!result.success) {
       throw new NotFoundException(result.message);
     }
@@ -17,19 +16,15 @@ export class PlayerService {
   }
 
   async findAll() {
-    return this.playerRepository.find({ where: {} as any });
+    return this.playerRepository.find();
   }
 
   async findById(id: string) {
-    const result = await this.playerRepository.update(id, {});
-    if (!result.success && result.error === 'NOT_FOUND') {
-      throw new NotFoundException(result.message);
-    }
     const player = await this.playerRepository.findOne({ where: { id } as any });
     if (!player) {
-      throw new NotFoundException(`${this.playerRepository.entityName} no encontrado`);
+      throw new NotFoundException('Player no encontrado');
     }
-    return { success: true, message: `${this.playerRepository.entityName} encontrado`, data: player };
+    return { success: true, message: 'Player encontrado', data: player };
   }
 
   async search(fullName: string) {
@@ -37,7 +32,7 @@ export class PlayerService {
   }
 
   async update(id: string, dto: UpdatePlayerDto) {
-    const result = await this.playerRepository.update(id, dto as any);
+    const result = await this.playerRepository.updateEntity(id, dto as any);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);
     }
