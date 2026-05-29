@@ -20,6 +20,18 @@
 ## Testing
 - _Por definir_
 
+## Validación
+- **Backend:** class-validator + class-transformer (ValidationPipe global con whitelist)
+
+## CI/CD
+- **Plataforma:** GitHub Actions
+  - `backend-ci.yml` — install, lint, build, test
+  - `frontend-ci.yml` — install, lint, build
+
+## Linting
+- ESLint + @typescript-eslint (ambos proyectos)
+- eslint-plugin-react-hooks (frontend)
+
 ## Gestión de dependencias
 - npm
 
