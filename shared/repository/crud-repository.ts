@@ -2,13 +2,13 @@ import { Repository, DeepPartial, DataSource, ObjectLiteral } from 'typeorm';
 import { ServiceResponse } from './service-response.type';
 
 export abstract class CrudRepository<T extends ObjectLiteral> extends Repository<T> {
-  protected abstract entityName: string;
+  abstract entityName: string;
 
   constructor(target: new () => T, dataSource: DataSource) {
     super(target, dataSource.manager);
   }
 
-  async create(dto: DeepPartial<T>): Promise<ServiceResponse<T>> {
+  async createEntity(dto: DeepPartial<T>): Promise<ServiceResponse<T>> {
     try {
       const queryRunner = this.manager.connection.createQueryRunner();
       await queryRunner.connect();
@@ -26,11 +26,12 @@ export abstract class CrudRepository<T extends ObjectLiteral> extends Repository
         await queryRunner.release();
       }
     } catch (error) {
-      return { success: false, message: `Error al crear ${this.entityName}`, error: error.message };
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, message: `Error al crear ${this.entityName}`, error: msg };
     }
   }
 
-  async update(id: string, dto: Partial<T>): Promise<ServiceResponse<T>> {
+  async updateEntity(id: string, dto: Partial<T>): Promise<ServiceResponse<T>> {
     try {
       const queryRunner = this.manager.connection.createQueryRunner();
       await queryRunner.connect();
@@ -54,7 +55,8 @@ export abstract class CrudRepository<T extends ObjectLiteral> extends Repository
         await queryRunner.release();
       }
     } catch (error) {
-      return { success: false, message: `Error al actualizar ${this.entityName}`, error: error.message };
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, message: `Error al actualizar ${this.entityName}`, error: msg };
     }
   }
 
@@ -78,7 +80,8 @@ export abstract class CrudRepository<T extends ObjectLiteral> extends Repository
         await queryRunner.release();
       }
     } catch (error) {
-      return { success: false, message: `Error al eliminar ${this.entityName}`, error: error.message };
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, message: `Error al eliminar ${this.entityName}`, error: msg };
     }
   }
 }

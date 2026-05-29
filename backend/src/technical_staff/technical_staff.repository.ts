@@ -6,7 +6,7 @@ import { TechnicalStaff } from './technical_staff.entity';
 
 @Injectable()
 export class TechnicalStaffRepository extends BaseRepository<TechnicalStaff> {
-  protected entityName = 'TechnicalStaff';
+  entityName = 'TechnicalStaff';
 
   constructor(@InjectDataSource() dataSource: DataSource) {
     super(TechnicalStaff, dataSource);

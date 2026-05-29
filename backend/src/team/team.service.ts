@@ -8,7 +8,7 @@ export class TeamService {
   constructor(private readonly repository: TeamRepository) {}
 
   async create(dto: CreateTeamDto) {
-    const result = await this.repository.create(dto as any);
+    const result = await this.repository.createEntity(dto as any);
     if (!result.success) {
       throw new NotFoundException(result.message);
     }
@@ -28,7 +28,7 @@ export class TeamService {
   }
 
   async update(id: string, dto: UpdateTeamDto) {
-    const result = await this.repository.update(id, dto as any);
+    const result = await this.repository.updateEntity(id, dto as any);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);
     }

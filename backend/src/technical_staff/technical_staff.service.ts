@@ -8,7 +8,7 @@ export class TechnicalStaffService {
   constructor(private readonly repository: TechnicalStaffRepository) {}
 
   async create(dto: CreateTechnicalStaffDto) {
-    const result = await this.repository.create(dto as any);
+    const result = await this.repository.createEntity(dto as any);
     if (!result.success) {
       throw new NotFoundException(result.message);
     }
@@ -20,11 +20,11 @@ export class TechnicalStaffService {
   }
 
   async findById(id: string) {
-    const player = await this.repository.findOne({ where: { id } as any });
-    if (!player) {
-      throw new NotFoundException(`TechnicalStaff no encontrado`);
+    const entity = await this.repository.findOne({ where: { id } as any });
+    if (!entity) {
+      throw new NotFoundException('TechnicalStaff no encontrado');
     }
-    return { success: true, message: 'TechnicalStaff encontrado', data: player };
+    return { success: true, message: 'TechnicalStaff encontrado', data: entity };
   }
 
   async search(fullName: string) {
@@ -32,7 +32,7 @@ export class TechnicalStaffService {
   }
 
   async update(id: string, dto: UpdateTechnicalStaffDto) {
-    const result = await this.repository.update(id, dto as any);
+    const result = await this.repository.updateEntity(id, dto as any);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);
     }

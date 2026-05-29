@@ -6,7 +6,7 @@ import { Player } from './player.entity';
 
 @Injectable()
 export class PlayerRepository extends BaseRepository<Player> {
-  protected entityName = 'Player';
+  entityName = 'Player';
 
   constructor(@InjectDataSource() dataSource: DataSource) {
     super(Player, dataSource);
