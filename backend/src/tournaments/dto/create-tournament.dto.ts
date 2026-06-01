@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsDateString, MaxLength } from 'class-validator';
+import { IsString, IsEnum, IsDateString, IsUUID, IsOptional, MaxLength } from 'class-validator';
 import { TournamentType } from '../tournament-type.enum';
 
 export class CreateTournamentDto {
@@ -14,4 +14,8 @@ export class CreateTournamentDto {
 
   @IsDateString()
   due_date: string;
+
+  @IsOptional()
+  @IsUUID('4', { each: true })
+  team_ids?: string[];
 }
