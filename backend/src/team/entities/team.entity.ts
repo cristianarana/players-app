@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Player } from '../players/player.entity';
-import { TechnicalStaff } from '../technical_staff/technical_staff.entity';
-import { TournamentTeam } from '../tournaments/tournament-team.entity';
-import { Match } from '../matches/entities/match.entity';
+import { Player } from '../../players/entities/player.entity';
+import { TechnicalStaff } from '../../technical_staff/entities/technical_staff.entity';
+import { TournamentTeam } from '../../tournaments/entities/tournament-team.entity';
+import { Match } from '../../matches/entities/match.entity';
 
 @Entity('teams')
 export class Team {

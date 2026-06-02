@@ -1,5 +1,5 @@
 import { IsString, IsEnum, IsDateString, IsUUID, IsOptional, MaxLength } from 'class-validator';
-import { TournamentType } from '../tournament-type.enum';
+import { TournamentType } from '../entities/tournament-type.enum';
 
 export class UpdateTournamentDto {
   @IsOptional()

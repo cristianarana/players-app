@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, DeleteDateColumn } from 'typeorm';
 import { TournamentType } from './tournament-type.enum';
 import { TournamentTeam } from './tournament-team.entity';
-import { CompetitionStage } from '../matches/entities/competition-stage.entity';
+import { CompetitionStage } from '../../matches/entities/competition-stage.entity';
 
 @Entity('tournaments')
 export class Tournament {

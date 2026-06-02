@@ -5,7 +5,7 @@ import { TrainingRepository } from '../repository/training.repository';
 import { CreateTrainingDto } from '../dto/create-training.dto';
 import { UpdateTrainingDto } from '../dto/update-training.dto';
 import { TrainingPlayer } from '../entity/training-player.entity';
-import { Player } from '../../players/player.entity';
+import { Player } from '../../players/entities/player.entity';
 
 @Injectable()
 export class TrainingService {

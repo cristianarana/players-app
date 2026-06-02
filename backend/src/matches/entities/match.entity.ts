@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, DeleteDateColumn } from 'typeorm';
-import { Team } from '../../team/team.entity';
+import { Team } from '../../team/entities/team.entity';
 import { MatchDay } from './match-day.entity';
 
 @Entity('matches')

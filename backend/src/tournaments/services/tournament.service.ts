@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { TournamentRepository } from './tournament.repository';
-import { CreateTournamentDto } from './dto/create-tournament.dto';
-import { UpdateTournamentDto } from './dto/update-tournament.dto';
-import { TournamentTeam } from './tournament-team.entity';
-import { Team } from '../team/team.entity';
+import { TournamentRepository } from '../repositories/tournament.repository';
+import { CreateTournamentDto } from '../dto/create-tournament.dto';
+import { UpdateTournamentDto } from '../dto/update-tournament.dto';
+import { TournamentTeam } from '../entities/tournament-team.entity';
+import { Team } from '../../team/entities/team.entity';
 
 @Injectable()
 export class TournamentService {

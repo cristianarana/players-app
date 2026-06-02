@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 import { CompetitionStageRepository } from '../repositories/competition-stage.repository';
 import { CreateCompetitionStageDto } from '../dto/create-competition-stage.dto';
 import { UpdateCompetitionStageDto } from '../dto/update-competition-stage.dto';
-import { Tournament } from '../../tournaments/tournament.entity';
+import { Tournament } from '../../tournaments/entities/tournament.entity';
 
 @Injectable()
 export class CompetitionStageService {
