@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { MatchRepository } from '../repositories/match.repository';
@@ -25,12 +25,16 @@ export class MatchService {
     if (!matchDay) throw new NotFoundException(`MatchDay ${dto.matchday_id} not found`);
 
     const result = await this.repository.createEntity(dto as any);
-    if (!result.success) throw new NotFoundException(result.message);
+    if (!result.success) throw new BadRequestException(result.message);
     return result;
   }
 
   async findAll() {
-    return this.repository.find({ relations: ['homeTeam', 'awayTeam', 'matchDay'] });
+    try {
+      return await this.repository.find({ relations: ['homeTeam', 'awayTeam', 'matchDay'] });
+    } catch {
+      throw new InternalServerErrorException('Error fetching matches');
+    }
   }
 
   async findById(id: string) {
@@ -60,6 +64,9 @@ export class MatchService {
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException('Match not found');
     }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
+    }
     return result;
   }
 
@@ -67,6 +74,9 @@ export class MatchService {
     const result = await this.repository.deleteById(id);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException('Match not found');
+    }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
     }
     return result;
   }

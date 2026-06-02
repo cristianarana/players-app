@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { PlayerRepository } from './player.repository';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -10,21 +10,25 @@ export class PlayerService {
   async create(dto: CreatePlayerDto) {
     const result = await this.playerRepository.createEntity(dto as any);
     if (!result.success) {
-      throw new NotFoundException(result.message);
+      throw new BadRequestException(result.message);
     }
     return result;
   }
 
   async findAll() {
-    return this.playerRepository.find();
+    try {
+      return await this.playerRepository.find();
+    } catch {
+      throw new InternalServerErrorException('Error fetching players');
+    }
   }
 
   async findById(id: string) {
     const player = await this.playerRepository.findOne({ where: { id } as any });
     if (!player) {
-      throw new NotFoundException('Player no encontrado');
+      throw new NotFoundException('Player not found');
     }
-    return { success: true, message: 'Player encontrado', data: player };
+    return { success: true, message: 'Player found', data: player };
   }
 
   async search(fullName: string) {
@@ -36,6 +40,9 @@ export class PlayerService {
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);
     }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
+    }
     return result;
   }
 
@@ -43,6 +50,9 @@ export class PlayerService {
     const result = await this.playerRepository.deleteById(id);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);
+    }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
     }
     return result;
   }

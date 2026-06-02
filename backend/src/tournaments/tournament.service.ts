@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { TournamentRepository } from './tournament.repository';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { TournamentTeam } from './tournament-team.entity';
+import { Team } from '../team/team.entity';
 
 @Injectable()
 export class TournamentService {
@@ -15,10 +16,18 @@ export class TournamentService {
 
   async create(dto: CreateTournamentDto) {
     const { team_ids, ...tournamentData } = dto;
+
+    if (team_ids?.length) {
+      for (const teamId of team_ids) {
+        const team = await this.dataSource.manager.findOne(Team, { where: { id: teamId } as any });
+        if (!team) throw new NotFoundException(`Team ${teamId} not found`);
+      }
+    }
+
     const result = await this.repository.createEntity(tournamentData as any);
 
     if (!result.success) {
-      throw new NotFoundException(result.message);
+      throw new BadRequestException(result.message);
     }
 
     const tournament = result.data!;
@@ -38,7 +47,7 @@ export class TournamentService {
         await queryRunner.commitTransaction();
       } catch (error) {
         await queryRunner.rollbackTransaction();
-        throw error;
+        throw new InternalServerErrorException('Error creating tournament teams');
       } finally {
         await queryRunner.release();
       }
@@ -48,7 +57,11 @@ export class TournamentService {
   }
 
   async findAll() {
-    return this.repository.find({ relations: ['tournamentTeams'] });
+    try {
+      return await this.repository.find({ relations: ['tournamentTeams'] });
+    } catch {
+      throw new InternalServerErrorException('Error fetching tournaments');
+    }
   }
 
   async findById(id: string) {
@@ -67,10 +80,20 @@ export class TournamentService {
   async update(id: string, dto: UpdateTournamentDto) {
     const { team_ids, ...tournamentData } = dto;
 
+    if (team_ids !== undefined) {
+      for (const teamId of team_ids) {
+        const team = await this.dataSource.manager.findOne(Team, { where: { id: teamId } as any });
+        if (!team) throw new NotFoundException(`Team ${teamId} not found`);
+      }
+    }
+
     const result = await this.repository.updateEntity(id, tournamentData as any);
 
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException('Tournament not found');
+    }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
     }
 
     if (team_ids !== undefined) {
@@ -91,7 +114,7 @@ export class TournamentService {
         await queryRunner.commitTransaction();
       } catch (error) {
         await queryRunner.rollbackTransaction();
-        throw error;
+        throw new InternalServerErrorException('Error updating tournament teams');
       } finally {
         await queryRunner.release();
       }
@@ -104,6 +127,9 @@ export class TournamentService {
     const result = await this.repository.deleteById(id);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException('Tournament not found');
+    }
+    if (!result.success) {
+      throw new BadRequestException(result.message);
     }
     return result;
   }
