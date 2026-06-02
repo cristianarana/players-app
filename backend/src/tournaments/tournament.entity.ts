@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, DeleteDateColumn } from 'typeorm';
 import { TournamentType } from './tournament-type.enum';
 import { TournamentTeam } from './tournament-team.entity';
+import { CompetitionStage } from '../matches/entities/competition-stage.entity';
 
 @Entity('tournaments')
 export class Tournament {
@@ -21,6 +22,9 @@ export class Tournament {
 
   @OneToMany(() => TournamentTeam, tournamentTeam => tournamentTeam.tournament)
   tournamentTeams: TournamentTeam[];
+
+  @OneToMany(() => CompetitionStage, competitionStage => competitionStage.tournament)
+  competitionStages: CompetitionStage[];
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deleted_at?: Date;
