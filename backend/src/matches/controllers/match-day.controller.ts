@@ -1,12 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, ParseUUIDPipe } from '@nestjs/common';
-import { MatchesService } from '../services/matches.service';
+import { MatchDayService } from '../services/match-day.service';
+import { CreateMatchDayDto } from '../dto/create-match-day.dto';
+import { UpdateMatchDayDto } from '../dto/update-match-day.dto';
 
-@Controller('matches')
-export class MatchesController {
-  constructor(private readonly service: MatchesService) {}
+@Controller('match-days')
+export class MatchDayController {
+  constructor(private readonly service: MatchDayService) {}
 
   @Post()
-  create(@Body() dto: any) {
+  create(@Body() dto: CreateMatchDayDto) {
     return this.service.create(dto);
   }
 
@@ -21,7 +23,7 @@ export class MatchesController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: any) {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateMatchDayDto) {
     return this.service.update(id, dto);
   }
 

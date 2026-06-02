@@ -5,7 +5,7 @@ import { CrudRepository } from '@shared/repository/crud-repository';
 import { CompetitionStage } from '../entities/competition-stage.entity';
 
 @Injectable()
-export class MatchesRepository extends CrudRepository<CompetitionStage> {
+export class CompetitionStageRepository extends CrudRepository<CompetitionStage> {
   entityName = 'CompetitionStage';
 
   constructor(@InjectDataSource() dataSource: DataSource) {
