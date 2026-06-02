@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { PersonBase } from '@shared/entities/person-base.entity';
-import { Team } from '../team/team.entity';
+import { Team } from '../../team/entities/team.entity';
 
 @Entity('technical_staff')
 export class TechnicalStaff extends PersonBase {

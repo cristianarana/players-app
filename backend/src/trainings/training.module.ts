@@ -4,7 +4,7 @@ import { Training } from './entity/training.entity';
 import { TrainingPlayer } from './entity/training-player.entity';
 import { TrainingRepository } from './repository/training.repository';
 import { TrainingService } from './service/training.service';
-import { TrainingController } from './controller/training.controller';
+import { TrainingController } from './controllers/training.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Training, TrainingPlayer])],

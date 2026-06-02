@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, ParseUUIDPipe } from '@nestjs/common';
-import { TechnicalStaffService } from './technical_staff.service';
-import { CreateTechnicalStaffDto } from './dto/create-technical-staff.dto';
-import { UpdateTechnicalStaffDto } from './dto/update-technical-staff.dto';
+import { TechnicalStaffService } from '../services/technical_staff.service';
+import { CreateTechnicalStaffDto } from '../dto/create-technical-staff.dto';
+import { UpdateTechnicalStaffDto } from '../dto/update-technical-staff.dto';
 
 @Controller('technical-staff')
 export class TechnicalStaffController {

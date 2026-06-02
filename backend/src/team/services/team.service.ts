@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import { TechnicalStaffRepository } from './technical_staff.repository';
-import { CreateTechnicalStaffDto } from './dto/create-technical-staff.dto';
-import { UpdateTechnicalStaffDto } from './dto/update-technical-staff.dto';
+import { TeamRepository } from '../repositories/team.repository';
+import { CreateTeamDto } from '../dto/create-team.dto';
+import { UpdateTeamDto } from '../dto/update-team.dto';
 
 @Injectable()
-export class TechnicalStaffService {
-  constructor(private readonly repository: TechnicalStaffRepository) {}
+export class TeamService {
+  constructor(private readonly repository: TeamRepository) {}
 
-  async create(dto: CreateTechnicalStaffDto) {
+  async create(dto: CreateTeamDto) {
     const result = await this.repository.createEntity(dto as any);
     if (!result.success) {
       throw new BadRequestException(result.message);
@@ -19,23 +19,19 @@ export class TechnicalStaffService {
     try {
       return await this.repository.find();
     } catch {
-      throw new InternalServerErrorException('Error fetching technical staff');
+      throw new InternalServerErrorException('Error fetching teams');
     }
   }
 
   async findById(id: string) {
-    const entity = await this.repository.findOne({ where: { id } as any });
-    if (!entity) {
-      throw new NotFoundException('TechnicalStaff not found');
+    const team = await this.repository.findOne({ where: { id } as any });
+    if (!team) {
+      throw new NotFoundException('Team not found');
     }
-    return { success: true, message: 'TechnicalStaff found', data: entity };
+    return { success: true, message: 'Team found', data: team };
   }
 
-  async search(fullName: string) {
-    return this.repository.getByFullName(fullName);
-  }
-
-  async update(id: string, dto: UpdateTechnicalStaffDto) {
+  async update(id: string, dto: UpdateTeamDto) {
     const result = await this.repository.updateEntity(id, dto as any);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);

@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, ParseUUIDPipe } from '@nestjs/common';
-import { TeamService } from './team.service';
-import { CreateTeamDto } from './dto/create-team.dto';
-import { UpdateTeamDto } from './dto/update-team.dto';
+import { TournamentService } from '../services/tournament.service';
+import { CreateTournamentDto } from '../dto/create-tournament.dto';
+import { UpdateTournamentDto } from '../dto/update-tournament.dto';
 
-@Controller('teams')
-export class TeamController {
-  constructor(private readonly service: TeamService) {}
+@Controller('tournaments')
+export class TournamentController {
+  constructor(private readonly service: TournamentService) {}
 
   @Post()
-  create(@Body() dto: CreateTeamDto) {
+  create(@Body() dto: CreateTournamentDto) {
     return this.service.create(dto);
   }
 
@@ -23,7 +23,7 @@ export class TeamController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateTeamDto) {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateTournamentDto) {
     return this.service.update(id, dto);
   }
 

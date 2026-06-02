@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import { TeamRepository } from './team.repository';
-import { CreateTeamDto } from './dto/create-team.dto';
-import { UpdateTeamDto } from './dto/update-team.dto';
+import { TechnicalStaffRepository } from '../repositories/technical_staff.repository';
+import { CreateTechnicalStaffDto } from '../dto/create-technical-staff.dto';
+import { UpdateTechnicalStaffDto } from '../dto/update-technical-staff.dto';
 
 @Injectable()
-export class TeamService {
-  constructor(private readonly repository: TeamRepository) {}
+export class TechnicalStaffService {
+  constructor(private readonly repository: TechnicalStaffRepository) {}
 
-  async create(dto: CreateTeamDto) {
+  async create(dto: CreateTechnicalStaffDto) {
     const result = await this.repository.createEntity(dto as any);
     if (!result.success) {
       throw new BadRequestException(result.message);
@@ -19,19 +19,23 @@ export class TeamService {
     try {
       return await this.repository.find();
     } catch {
-      throw new InternalServerErrorException('Error fetching teams');
+      throw new InternalServerErrorException('Error fetching technical staff');
     }
   }
 
   async findById(id: string) {
-    const team = await this.repository.findOne({ where: { id } as any });
-    if (!team) {
-      throw new NotFoundException('Team not found');
+    const entity = await this.repository.findOne({ where: { id } as any });
+    if (!entity) {
+      throw new NotFoundException('TechnicalStaff not found');
     }
-    return { success: true, message: 'Team found', data: team };
+    return { success: true, message: 'TechnicalStaff found', data: entity };
   }
 
-  async update(id: string, dto: UpdateTeamDto) {
+  async search(fullName: string) {
+    return this.repository.getByFullName(fullName);
+  }
+
+  async update(id: string, dto: UpdateTechnicalStaffDto) {
     const result = await this.repository.updateEntity(id, dto as any);
     if (!result.success && result.error === 'NOT_FOUND') {
       throw new NotFoundException(result.message);

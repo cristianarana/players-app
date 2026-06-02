@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { CrudRepository } from '@shared/repository/crud-repository';
-import { Tournament } from './tournament.entity';
+import { Tournament } from '../entities/tournament.entity';
 import { ServiceResponse } from '@shared/repository/service-response.type';
 
 @Injectable()
