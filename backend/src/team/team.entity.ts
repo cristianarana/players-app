@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Player } from '../players/player.entity';
 import { TechnicalStaff } from '../technical_staff/technical_staff.entity';
 import { TournamentTeam } from '../tournaments/tournament-team.entity';
+import { Match } from '../matches/entities/match.entity';
 
 @Entity('teams')
 export class Team {
@@ -25,4 +26,10 @@ export class Team {
 
   @OneToMany(() => TournamentTeam, tournamentTeam => tournamentTeam.team)
   tournamentTeams: TournamentTeam[];
+
+  @OneToMany(() => Match, match => match.homeTeam)
+  homeMatches: Match[];
+
+  @OneToMany(() => Match, match => match.awayTeam)
+  awayMatches: Match[];
 }

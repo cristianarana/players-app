@@ -29,6 +29,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - ./shared:/shared
     depends_on:
       - db
 
@@ -47,4 +48,4 @@ services:
       - backend
 
 volumes:
-  pgdata:
+  pgdata: 
