@@ -35,6 +35,12 @@ export class Player extends PersonBase {
   @Column({ name: 'contract_due_date', nullable: true, type: 'date' })
   contract_due_date?: string;
 
+  @Column({ name: 'contact_phone', nullable: true})
+  contact_phone?: number;
+
+  @Column({ name:'contact_email', nullable:true})
+  contact_email?:string;
+
   @ManyToOne(() => Team, team => team.players)
   @JoinColumn({ name: 'team_id' })
   team?: Team;

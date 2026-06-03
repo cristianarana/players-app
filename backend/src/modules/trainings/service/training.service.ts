@@ -45,7 +45,7 @@ export class TrainingService {
           });
         }
         await queryRunner.commitTransaction();
-      } catch (error) {
+      } catch {
         await queryRunner.rollbackTransaction();
         throw new InternalServerErrorException('Error creating training players');
       } finally {
@@ -112,7 +112,7 @@ export class TrainingService {
         }
 
         await queryRunner.commitTransaction();
-      } catch (error) {
+      } catch {
         await queryRunner.rollbackTransaction();
         throw new InternalServerErrorException('Error updating training players');
       } finally {
