@@ -45,7 +45,7 @@ export class TournamentService {
           });
         }
         await queryRunner.commitTransaction();
-      } catch (error) {
+      } catch {
         await queryRunner.rollbackTransaction();
         throw new InternalServerErrorException('Error creating tournament teams');
       } finally {
@@ -112,7 +112,7 @@ export class TournamentService {
         }
 
         await queryRunner.commitTransaction();
-      } catch (error) {
+      } catch {
         await queryRunner.rollbackTransaction();
         throw new InternalServerErrorException('Error updating tournament teams');
       } finally {
