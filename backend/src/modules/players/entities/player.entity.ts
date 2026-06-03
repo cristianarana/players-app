@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { PersonBase } from '@shared/entities/person-base.entity';
-import { Team } from '../../team/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity';
 import { TrainingPlayer } from '../../trainings/entity/training-player.entity';
 
 @Entity('players')

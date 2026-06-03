@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 import { MatchRepository } from '../repositories/match.repository';
 import { CreateMatchDto } from '../dto/create-match.dto';
 import { UpdateMatchDto } from '../dto/update-match.dto';
-import { Team } from '../../team/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity';
 import { MatchDay } from '../entities/match-day.entity';
 
 @Injectable()

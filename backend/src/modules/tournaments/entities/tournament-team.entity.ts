@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, DeleteDateColumn } from 'typeorm';
 import { Tournament } from './tournament.entity';
-import { Team } from '../../team/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity';
 
 @Entity('tournament_teams')
 export class TournamentTeam {
