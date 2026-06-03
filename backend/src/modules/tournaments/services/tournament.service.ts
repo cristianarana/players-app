@@ -5,7 +5,7 @@ import { TournamentRepository } from '../repositories/tournament.repository';
 import { CreateTournamentDto } from '../dto/create-tournament.dto';
 import { UpdateTournamentDto } from '../dto/update-tournament.dto';
 import { TournamentTeam } from '../entities/tournament-team.entity';
-import { Team } from '../../team/entities/team.entity';
+import { Team } from '../../teams/entities/team.entity';
 
 @Injectable()
 export class TournamentService {
