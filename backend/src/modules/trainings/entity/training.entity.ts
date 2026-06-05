@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, DeleteDateColumn } from 'typeorm';
 import { TrainingPlayer } from './training-player.entity';
 
 @Entity('trainings')
@@ -20,4 +20,7 @@ export class Training {
 
   @OneToMany(() => TrainingPlayer, trainingPlayer => trainingPlayer.training)
   trainingPlayers: TrainingPlayer[];
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at?: Date;
 }

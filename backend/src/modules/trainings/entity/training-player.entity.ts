@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, DeleteDateColumn } from 'typeorm';
 import { Training } from './training.entity';
 import { Player } from '../../players/entities/player.entity';
 
@@ -20,4 +20,7 @@ export class TrainingPlayer {
 
   @Column({ name: 'player_id' })
   player_id: string;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at?: Date;
 }

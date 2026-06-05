@@ -102,7 +102,7 @@ export class TrainingService {
       await queryRunner.startTransaction();
 
       try {
-        await queryRunner.manager.delete(TrainingPlayer, { training_id: id });
+        await queryRunner.manager.softDelete(TrainingPlayer, { training_id: id });
 
         for (const playerId of player_ids) {
           await queryRunner.manager.save(TrainingPlayer, {

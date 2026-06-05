@@ -60,7 +60,7 @@ export class PlayerController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un jugador', description: 'Elimina un jugador de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar un jugador', description: 'Elimina un jugador de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })
   @ApiOkResponse({ description: 'Jugador eliminado exitosamente' })
   @ApiNotFoundResponse({ description: 'Jugador no encontrado' })

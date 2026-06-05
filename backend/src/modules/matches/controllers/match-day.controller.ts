@@ -51,7 +51,7 @@ export class MatchDayController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar una jornada', description: 'Elimina una jornada de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar una jornada', description: 'Elimina una jornada de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })
   @ApiOkResponse({ description: 'Jornada eliminada exitosamente' })
   @ApiNotFoundResponse({ description: 'Jornada no encontrada' })

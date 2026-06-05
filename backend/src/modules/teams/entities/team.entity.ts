@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, DeleteDateColumn } from 'typeorm';
 import { Player } from '../../players/entities/player.entity';
 import { TechnicalStaff } from '../../technical_staff/entities/technical_staff.entity';
 import { TournamentTeam } from '../../tournaments/entities/tournament-team.entity';
@@ -32,4 +32,7 @@ export class Team {
 
   @OneToMany(() => Match, match => match.awayTeam)
   awayMatches: Match[];
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted_at?: Date;
 }

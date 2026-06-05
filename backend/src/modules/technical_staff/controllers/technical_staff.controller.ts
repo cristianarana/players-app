@@ -60,7 +60,7 @@ export class TechnicalStaffController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un miembro del staff técnico', description: 'Elimina un miembro del staff técnico de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar un miembro del staff técnico', description: 'Elimina un miembro del staff técnico de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del miembro del staff técnico' })
   @ApiOkResponse({ description: 'Staff técnico eliminado exitosamente' })
   @ApiNotFoundResponse({ description: 'Staff técnico no encontrado' })
