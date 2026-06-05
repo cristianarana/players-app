@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.1 (2026-06-05)
+
+### Changed
+- Migración de Hard Delete a Soft Delete en los módulos:
+  - **Teams**: agregado `@DeleteDateColumn` en entidad, override de repositorio con `softDelete()`
+  - **Trainings**: agregado `@DeleteDateColumn` en `Training` y `TrainingPlayer`, override de repositorio, junction usa `softDelete`
+  - **Matches**: override de repositorio con `softDelete()` (ya tenía columna)
+  - **Match Days**: override de repositorio con `softDelete()` (ya tenía columna)
+  - **Competition Stages**: override de repositorio con `softDelete()` (ya tenía columna)
+  - **TournamentTeam** (junction): cambio a `softDelete` en `tournament.service.update`
+
+### Fixed
+- Descripciones de Swagger corregidas de "hard delete" a "soft delete" en Players, Technical Staff, Teams, Trainings, Matches, Match Days y Competition Stages
+
 ## 0.2.0 (2026-06-03)
 
 ### Added
