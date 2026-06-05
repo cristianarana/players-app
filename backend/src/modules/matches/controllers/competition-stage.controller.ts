@@ -51,7 +51,7 @@ export class CompetitionStageController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar una fase de competición', description: 'Elimina una fase de competición de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar una fase de competición', description: 'Elimina una fase de competición de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la fase de competición' })
   @ApiOkResponse({ description: 'Fase de competición eliminada exitosamente' })
   @ApiNotFoundResponse({ description: 'Fase de competición no encontrada' })

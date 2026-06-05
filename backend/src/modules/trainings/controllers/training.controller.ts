@@ -91,7 +91,7 @@ export class TrainingController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un entrenamiento', description: 'Elimina un entrenamiento de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar un entrenamiento', description: 'Elimina un entrenamiento de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })
   @ApiOkResponse({ description: 'Entrenamiento eliminado exitosamente' })
   @ApiNotFoundResponse({ description: 'Entrenamiento no encontrado' })

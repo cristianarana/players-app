@@ -51,7 +51,7 @@ export class MatchController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un partido', description: 'Elimina un partido de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar un partido', description: 'Elimina un partido de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del partido' })
   @ApiOkResponse({ description: 'Partido eliminado exitosamente' })
   @ApiNotFoundResponse({ description: 'Partido no encontrado' })

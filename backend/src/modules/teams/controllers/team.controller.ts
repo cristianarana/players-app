@@ -51,7 +51,7 @@ export class TeamController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un equipo', description: 'Elimina un equipo de la base de datos (hard delete)' })
+  @ApiOperation({ summary: 'Eliminar un equipo', description: 'Elimina un equipo de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
   @ApiOkResponse({ description: 'Equipo eliminado exitosamente' })
   @ApiNotFoundResponse({ description: 'Equipo no encontrado' })

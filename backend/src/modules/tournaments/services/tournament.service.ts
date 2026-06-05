@@ -102,7 +102,7 @@ export class TournamentService {
       await queryRunner.startTransaction();
 
       try {
-        await queryRunner.manager.delete(TournamentTeam, { tournament_id: id });
+        await queryRunner.manager.softDelete(TournamentTeam, { tournament_id: id });
 
         for (const teamId of team_ids) {
           await queryRunner.manager.save(TournamentTeam, {
