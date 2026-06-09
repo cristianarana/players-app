@@ -58,7 +58,7 @@ export class UserRepository extends CrudRepository<User> {
         const result = await queryRunner.manager.update(
           this.target,
           { id } as any,
-          { user_inactive: true, inactive_at: new Date() } as any,
+          { inactive_at: new Date() } as any,
         );
         await queryRunner.commitTransaction();
 

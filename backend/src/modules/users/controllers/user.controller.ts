@@ -7,12 +7,14 @@ import {
 import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { Public } from '../../auth/decorators/public.decorator';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Crear un usuario', description: 'Registra un nuevo usuario con username, password y rol' })
   @ApiBody({ type: CreateUserDto })

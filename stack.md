@@ -136,6 +136,8 @@ Actualmente cuenta con el esqueleto de la aplicación (`App.tsx`, `main.tsx`).
 | `DB_PASSWORD` | `postgres` | Contraseña de BD |
 | `DB_DATABASE` | `players_app` | Nombre de la BD |
 | `PORT` | `3000` | Puerto del backend |
+| `JWT_SECRET` | `super-secret-key` | Clave secreta para firmar JWT |
+| `JWT_EXPIRES_IN` | `24h` | Tiempo de expiración del token (ej: `1h`, `7d`) |
 
 ## Convenciones del proyecto
 

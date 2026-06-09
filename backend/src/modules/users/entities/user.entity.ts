@@ -12,9 +12,6 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ name: 'user_inactive', default: false })
-  user_inactive: boolean;
-
   @Column({ type: 'varchar', length: 10 })
   role: RoleType;
 

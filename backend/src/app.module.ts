@@ -8,8 +8,9 @@ import { TeamModule } from './modules/teams/team.module';
 import { TournamentsModule } from './modules/tournaments/tournaments.module';
 import { TrainingModule } from './modules/trainings/training.module';
 import { MatchesModule } from './modules/matches/matches.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRootAsync(databaseConfig), HealthModule, PlayersModule, TechnicalStaffModule, TeamModule, TournamentsModule, TrainingModule, MatchesModule],
+  imports: [TypeOrmModule.forRootAsync(databaseConfig), HealthModule, PlayersModule, TechnicalStaffModule, TeamModule, TournamentsModule, TrainingModule, MatchesModule, AuthModule],
 })
 export class AppModule {}
