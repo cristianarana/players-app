@@ -8,13 +8,15 @@ import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { Public } from '../../auth/decorators/public.decorator';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../dto/role-type.enum';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
-  @Public()
+  @Roles(RoleType.ADMIN)
   @Post()
   @ApiOperation({ summary: 'Crear un usuario', description: 'Registra un nuevo usuario con username, password y rol' })
   @ApiBody({ type: CreateUserDto })
@@ -24,6 +26,7 @@ export class UserController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get()
   @ApiOperation({ summary: 'Listar todos los usuarios' })
   @ApiOkResponse({ description: 'Lista de usuarios registrados' })
@@ -32,6 +35,7 @@ export class UserController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN)
   @Get('username/:username')
   @ApiOperation({ summary: 'Obtener un usuario por username' })
   @ApiParam({ name: 'username', type: String, description: 'Username del usuario' })
@@ -41,6 +45,7 @@ export class UserController {
     return this.service.findByUsername(username);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un usuario por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del usuario' })
@@ -50,6 +55,7 @@ export class UserController {
     return this.service.findById(id);
   }
 
+  @Roles(RoleType.ADMIN)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un usuario', description: 'Actualiza username y/o rol de un usuario existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
@@ -61,6 +67,7 @@ export class UserController {
     return this.service.update(id, dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario', description: 'Desactiva un usuario (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del usuario' })

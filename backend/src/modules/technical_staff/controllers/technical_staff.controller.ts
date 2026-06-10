@@ -4,6 +4,8 @@ import {
   ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse,
   ApiNotFoundResponse, ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { TechnicalStaffService } from '../services/technical_staff.service';
 import { CreateTechnicalStaffDto } from '../dto/create-technical-staff.dto';
 import { UpdateTechnicalStaffDto } from '../dto/update-technical-staff.dto';
@@ -22,6 +24,7 @@ export class TechnicalStaffController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get()
   @ApiOperation({ summary: 'Listar todo el staff técnico' })
   @ApiOkResponse({ description: 'Lista del staff técnico registrado' })
@@ -30,6 +33,7 @@ export class TechnicalStaffController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN)
   @Get('search')
   @ApiOperation({ summary: 'Buscar staff técnico por nombre completo' })
   @ApiQuery({ name: 'fullName', type: String, description: 'Nombre completo o parcial del miembro' })
@@ -39,6 +43,7 @@ export class TechnicalStaffController {
     return this.service.search(fullName);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un miembro del staff técnico por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del miembro del staff técnico' })

@@ -4,6 +4,8 @@ import {
   ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse,
   ApiNotFoundResponse, ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { PlayerService } from '../services/player.service';
 import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
@@ -13,6 +15,7 @@ import { UpdatePlayerDto } from '../dto/update-player.dto';
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
+  @Roles(RoleType.ADMIN)
   @Post()
   @ApiOperation({ summary: 'Crear un jugador', description: 'Registra un nuevo jugador con datos personales, posición y detalles de contrato' })
   @ApiBody({ type: CreatePlayerDto })
@@ -22,6 +25,7 @@ export class PlayerController {
     return this.playerService.create(dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get()
   @ApiOperation({ summary: 'Listar todos los jugadores' })
   @ApiOkResponse({ description: 'Lista de jugadores registrados' })
@@ -30,6 +34,7 @@ export class PlayerController {
     return this.playerService.findAll();
   }
 
+  @Roles(RoleType.ADMIN)
   @Get('search')
   @ApiOperation({ summary: 'Buscar jugadores por nombre completo' })
   @ApiQuery({ name: 'fullName', type: String, description: 'Nombre completo o parcial del jugador' })
@@ -39,6 +44,7 @@ export class PlayerController {
     return this.playerService.search(fullName);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un jugador por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })
@@ -48,6 +54,7 @@ export class PlayerController {
     return this.playerService.findById(id);
   }
 
+  @Roles(RoleType.ADMIN)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un jugador', description: 'Actualiza datos personales, posición o detalles de contrato de un jugador existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })
@@ -59,6 +66,7 @@ export class PlayerController {
     return this.playerService.update(id, dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un jugador', description: 'Elimina un jugador de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })

@@ -7,6 +7,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { TrainingService } from '../service/training.service';
 import { CreateTrainingDto } from '../dto/create-training.dto';
 import { UpdateTrainingDto } from '../dto/update-training.dto';
@@ -43,6 +45,7 @@ export class TrainingController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get()
   @ApiOperation({ summary: 'Listar todos los entrenamientos' })
   @ApiOkResponse({ description: 'Lista de entrenamientos registrados' })
@@ -51,6 +54,7 @@ export class TrainingController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un entrenamiento por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })

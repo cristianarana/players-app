@@ -4,6 +4,8 @@ import {
   ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse,
   ApiNotFoundResponse, ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { MatchDayService } from '../services/match-day.service';
 import { CreateMatchDayDto } from '../dto/create-match-day.dto';
 import { UpdateMatchDayDto } from '../dto/update-match-day.dto';
@@ -13,6 +15,7 @@ import { UpdateMatchDayDto } from '../dto/update-match-day.dto';
 export class MatchDayController {
   constructor(private readonly service: MatchDayService) {}
 
+  @Roles(RoleType.ADMIN)
   @Post()
   @ApiOperation({ summary: 'Crear una jornada', description: 'Registra una nueva jornada asociada a una fase de competición' })
   @ApiBody({ type: CreateMatchDayDto })
@@ -22,6 +25,7 @@ export class MatchDayController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Get()
   @ApiOperation({ summary: 'Listar todas las jornadas' })
   @ApiOkResponse({ description: 'Lista de jornadas registradas' })
@@ -30,6 +34,7 @@ export class MatchDayController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener una jornada por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })
@@ -39,6 +44,7 @@ export class MatchDayController {
     return this.service.findById(id);
   }
 
+  @Roles(RoleType.ADMIN)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar una jornada', description: 'Actualiza nombre, fechas y/o fase de una jornada existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })
@@ -50,6 +56,7 @@ export class MatchDayController {
     return this.service.update(id, dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar una jornada', description: 'Elimina una jornada de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })
