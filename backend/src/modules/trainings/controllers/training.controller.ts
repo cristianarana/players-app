@@ -7,6 +7,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { TrainingService } from '../service/training.service';
 import { CreateTrainingDto } from '../dto/create-training.dto';
 import { UpdateTrainingDto } from '../dto/update-training.dto';
@@ -16,6 +18,7 @@ import { UpdateTrainingDto } from '../dto/update-training.dto';
 export class TrainingController {
   constructor(private readonly service: TrainingService) {}
 
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Post()
   @ApiOperation({ summary: 'Crear un entrenamiento', description: 'Registra un nuevo entrenamiento con día, microciclo, objetivo y archivo opcional' })
   @ApiConsumes('multipart/form-data')
@@ -43,6 +46,7 @@ export class TrainingController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todos los entrenamientos' })
   @ApiOkResponse({ description: 'Lista de entrenamientos registrados' })
@@ -51,6 +55,7 @@ export class TrainingController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un entrenamiento por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })
@@ -60,6 +65,7 @@ export class TrainingController {
     return this.service.findById(id);
   }
 
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un entrenamiento', description: 'Actualiza día, microciclo, objetivo y/o archivo de un entrenamiento existente' })
   @ApiConsumes('multipart/form-data')
@@ -90,6 +96,7 @@ export class TrainingController {
     return this.service.update(id, dto);
   }
 
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un entrenamiento', description: 'Elimina un entrenamiento de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })

@@ -4,6 +4,8 @@ import {
   ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse,
   ApiNotFoundResponse, ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { RoleType } from '../../users/dto/role-type.enum';
 import { TeamService } from '../services/team.service';
 import { CreateTeamDto } from '../dto/create-team.dto';
 import { UpdateTeamDto } from '../dto/update-team.dto';
@@ -13,6 +15,7 @@ import { UpdateTeamDto } from '../dto/update-team.dto';
 export class TeamController {
   constructor(private readonly service: TeamService) {}
 
+  @Roles(RoleType.ADMIN)
   @Post()
   @ApiOperation({ summary: 'Crear un equipo', description: 'Registra un nuevo equipo con nombre, país y ciudad' })
   @ApiBody({ type: CreateTeamDto })
@@ -22,6 +25,7 @@ export class TeamController {
     return this.service.create(dto);
   }
 
+  @Roles(RoleType.ADMIN, RoleType.PLAYER)
   @Get()
   @ApiOperation({ summary: 'Listar todos los equipos' })
   @ApiOkResponse({ description: 'Lista de equipos registrados' })
@@ -30,6 +34,7 @@ export class TeamController {
     return this.service.findAll();
   }
 
+  @Roles(RoleType.ADMIN, RoleType.PLAYER)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un equipo por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del equipo' })
@@ -39,6 +44,7 @@ export class TeamController {
     return this.service.findById(id);
   }
 
+  @Roles(RoleType.ADMIN)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un equipo', description: 'Actualiza nombre, país y/o ciudad de un equipo existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
@@ -50,6 +56,7 @@ export class TeamController {
     return this.service.update(id, dto);
   }
 
+  @Roles(RoleType.ADMIN)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un equipo', description: 'Elimina un equipo de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
