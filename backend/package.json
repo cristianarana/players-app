@@ -8,6 +8,7 @@
     "start": "node dist/backend/src/main",
     "start:dev": "nest build && ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/main.ts",
     "lint": "eslint src --ext .ts",
+    "seed": "ts-node -r tsconfig-paths/register src/db/seed/seed.ts",
     "test": "echo 'No tests yet'"
   },
   "dependencies": {

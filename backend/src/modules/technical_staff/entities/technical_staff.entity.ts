@@ -25,4 +25,7 @@ export class TechnicalStaff extends PersonBase {
 
   @Column({ name: 'team_id', nullable: true })
   team_id?: string;
+
+  @Column({ name: 'user_id', nullable: true })
+  user_id?: string;
 }

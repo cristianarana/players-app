@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, ParseUUIDPipe, Req, ForbiddenException } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags, ApiOperation, ApiParam, ApiBody, ApiQuery,
   ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse,
@@ -25,7 +26,7 @@ export class PlayerController {
     return this.playerService.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todos los jugadores' })
   @ApiOkResponse({ description: 'Lista de jugadores registrados' })
@@ -34,7 +35,7 @@ export class PlayerController {
     return this.playerService.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get('search')
   @ApiOperation({ summary: 'Buscar jugadores por nombre completo' })
   @ApiQuery({ name: 'fullName', type: String, description: 'Nombre completo o parcial del jugador' })
@@ -44,7 +45,7 @@ export class PlayerController {
     return this.playerService.search(fullName);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un jugador por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })
@@ -54,7 +55,7 @@ export class PlayerController {
     return this.playerService.findById(id);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un jugador', description: 'Actualiza datos personales, posición o detalles de contrato de un jugador existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del jugador' })
@@ -62,7 +63,14 @@ export class PlayerController {
   @ApiOkResponse({ description: 'Jugador actualizado exitosamente' })
   @ApiNotFoundResponse({ description: 'Jugador no encontrado' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdatePlayerDto) {
+  async update(@Req() req: Request, @Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdatePlayerDto) {
+    const user = (req as any).user;
+    if (user.role === RoleType.PLAYER) {
+      const player = await this.playerService.findById(id);
+      if (!player.data || player.data.user_id !== user.id) {
+        throw new ForbiddenException('You can only edit your own profile');
+      }
+    }
     return this.playerService.update(id, dto);
   }
 

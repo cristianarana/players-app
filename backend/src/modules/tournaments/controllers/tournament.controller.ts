@@ -25,7 +25,7 @@ export class TournamentController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todos los torneos' })
   @ApiOkResponse({ description: 'Lista de torneos registrados' })
@@ -34,7 +34,7 @@ export class TournamentController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un torneo por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del torneo' })

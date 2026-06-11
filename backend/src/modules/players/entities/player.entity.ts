@@ -41,6 +41,9 @@ export class Player extends PersonBase {
   @Column({ name:'contact_email', nullable:true})
   contact_email?:string;
 
+  @Column({ name: 'user_id', nullable: true })
+  user_id?: string;
+
   @ManyToOne(() => Team, team => team.players)
   @JoinColumn({ name: 'team_id' })
   team?: Team;

@@ -15,7 +15,7 @@ import { UpdateMatchDayDto } from '../dto/update-match-day.dto';
 export class MatchDayController {
   constructor(private readonly service: MatchDayService) {}
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Post()
   @ApiOperation({ summary: 'Crear una jornada', description: 'Registra una nueva jornada asociada a una fase de competición' })
   @ApiBody({ type: CreateMatchDayDto })
@@ -25,7 +25,7 @@ export class MatchDayController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todas las jornadas' })
   @ApiOkResponse({ description: 'Lista de jornadas registradas' })
@@ -34,7 +34,7 @@ export class MatchDayController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener una jornada por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })
@@ -44,7 +44,7 @@ export class MatchDayController {
     return this.service.findById(id);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar una jornada', description: 'Actualiza nombre, fechas y/o fase de una jornada existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la jornada' })

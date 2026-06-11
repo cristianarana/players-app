@@ -25,7 +25,7 @@ export class CompetitionStageController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todas las fases de competición' })
   @ApiOkResponse({ description: 'Lista de fases de competición registradas' })
@@ -34,7 +34,7 @@ export class CompetitionStageController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener una fase de competición por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID de la fase de competición' })

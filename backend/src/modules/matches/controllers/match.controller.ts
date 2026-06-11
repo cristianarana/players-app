@@ -15,7 +15,7 @@ import { UpdateMatchDto } from '../dto/update-match.dto';
 export class MatchController {
   constructor(private readonly service: MatchService) {}
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Post()
   @ApiOperation({ summary: 'Crear un partido', description: 'Registra un nuevo partido con equipos local y visitante, marcador, estadio y jornada' })
   @ApiBody({ type: CreateMatchDto })
@@ -25,7 +25,7 @@ export class MatchController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todos los partidos' })
   @ApiOkResponse({ description: 'Lista de partidos registrados' })
@@ -34,7 +34,7 @@ export class MatchController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un partido por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del partido' })
@@ -44,7 +44,7 @@ export class MatchController {
     return this.service.findById(id);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.COACH)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un partido', description: 'Actualiza marcador, estadio, fecha y/o equipos de un partido existente' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del partido' })

@@ -25,7 +25,7 @@ export class TeamController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER)
   @Get()
   @ApiOperation({ summary: 'Listar todos los equipos' })
   @ApiOkResponse({ description: 'Lista de equipos registrados' })
@@ -34,7 +34,7 @@ export class TeamController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN, RoleType.PLAYER)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un equipo por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del equipo' })
