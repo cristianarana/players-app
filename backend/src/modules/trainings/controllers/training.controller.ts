@@ -18,7 +18,7 @@ import { UpdateTrainingDto } from '../dto/update-training.dto';
 export class TrainingController {
   constructor(private readonly service: TrainingService) {}
 
-  @Roles(RoleType.ADMIN, RoleType.COACH)
+  @Roles(RoleType.COACH)
   @Post()
   @ApiOperation({ summary: 'Crear un entrenamiento', description: 'Registra un nuevo entrenamiento con día, microciclo, objetivo y archivo opcional' })
   @ApiConsumes('multipart/form-data')
@@ -46,7 +46,7 @@ export class TrainingController {
     return this.service.create(dto);
   }
 
-  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
+  @Roles(RoleType.PLAYER, RoleType.COACH)
   @Get()
   @ApiOperation({ summary: 'Listar todos los entrenamientos' })
   @ApiOkResponse({ description: 'Lista de entrenamientos registrados' })
@@ -55,7 +55,7 @@ export class TrainingController {
     return this.service.findAll();
   }
 
-  @Roles(RoleType.ADMIN, RoleType.PLAYER, RoleType.COACH)
+  @Roles(RoleType.PLAYER, RoleType.COACH)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un entrenamiento por UUID' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })
@@ -65,7 +65,7 @@ export class TrainingController {
     return this.service.findById(id);
   }
 
-  @Roles(RoleType.ADMIN, RoleType.COACH)
+  @Roles(RoleType.COACH)
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un entrenamiento', description: 'Actualiza día, microciclo, objetivo y/o archivo de un entrenamiento existente' })
   @ApiConsumes('multipart/form-data')
@@ -96,7 +96,7 @@ export class TrainingController {
     return this.service.update(id, dto);
   }
 
-  @Roles(RoleType.ADMIN, RoleType.COACH)
+  @Roles(RoleType.COACH)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un entrenamiento', description: 'Elimina un entrenamiento de la base de datos (soft delete)' })
   @ApiParam({ name: 'id', type: String, format: 'uuid', description: 'UUID del entrenamiento' })
