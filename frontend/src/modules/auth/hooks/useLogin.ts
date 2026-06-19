@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { login as loginService } from '../services/auth.service';
+import { useAuth } from '@shared/contexts/AuthContext';
 import type {
   LoginRequest,
   LoginResponse,
 } from '../types/auth.types';
 
 export function useLogin() {
+  const { login: authLogin } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,10 +22,7 @@ export function useLogin() {
         credentials,
       );
 
-      localStorage.setItem(
-        'access_token',
-        response.access_token,
-      );
+      authLogin(response.access_token);
 
       return response;
     } catch (err) {

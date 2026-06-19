@@ -51,17 +51,17 @@ export function LoginForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEndIcon className="size-6" />
+                <GalleryVerticalEndIcon className="size-6 text-white" />
               </div>
               <span className="sr-only">Fantasy Team.</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Fantasy Team Management.</h1>
-            <FieldDescription>
+            <h1 className="text-xl font-bold text-white">Welcome to Fantasy Team Management.</h1>
+            <FieldDescription className="text-white/80">
               Don&apos;t have an account? <a href="#">Sign up</a>
             </FieldDescription>
           </div>
           <Field>
-          <FieldLabel htmlFor="username">Username</FieldLabel>
+          <FieldLabel htmlFor="username" className="text-white">Username</FieldLabel>
           <Input
             id="username"
             value={username}
@@ -71,7 +71,7 @@ export function LoginForm({
           />
           </Field>
           <Field>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <FieldLabel htmlFor="password" className="text-white">Password</FieldLabel>
             <Input
               id="password"
               value={password}
@@ -91,14 +91,16 @@ export function LoginForm({
               </FieldDescription>
               )
             }
-            <Button 
+            <Button
+              variant="gold"
               type="submit"
               disabled={loading}
+              className="w-full"
             >{
               loading ? 'Logging in...' : 'Login'
             }</Button>
           </Field>
-          <FieldSeparator>Or</FieldSeparator>
+          <FieldSeparator className="[&_[data-slot=field-separator-content]]:bg-transparent [&_[data-slot=field-separator-content]]:text-white/80">Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
             {/* TODO: OAuth Google on backend.*/}
             {/*
@@ -115,7 +117,7 @@ export function LoginForm({
           </Field>
         </FieldGroup>
       </form>
-      <FieldDescription className="px-6 text-center">
+      <FieldDescription className="px-6 text-center text-white/60">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
