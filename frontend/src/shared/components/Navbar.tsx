@@ -39,9 +39,6 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" asChild>
-            <Link to="/signup">Sign Up</Link>
-          </Button>
           <Button asChild>
             <Link to="/login">Log In</Link>
           </Button>
