@@ -1,0 +1,91 @@
+import { Link } from 'react-router-dom';
+import { Button } from '@shared/components/ui/button';
+
+export default function LandingPage() {
+  return (
+    <div className="flex flex-col">
+      <section className="flex min-h-[calc(100svh-4rem)] flex-col items-center justify-center px-4 text-center">
+        <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          Manage your teams, players, and tournaments
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+          The all-in-one platform for sports management. Organize matches, track
+          performance, and keep everyone connected.
+        </p>
+        <div className="mt-8 flex gap-4">
+          <Button size="lg" asChild>
+            <Link to="/signup">Get Started</Link>
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <Link to="/login">Log In</Link>
+          </Button>
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-muted/50 px-4 py-20">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="text-center text-3xl font-bold">Features</h2>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="rounded-xl border border-border bg-background p-6"
+              >
+                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold">{feature.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-border px-4 py-8 text-center text-sm text-muted-foreground">
+        &copy; {new Date().getFullYear()} PlayersApp. All rights reserved.
+      </footer>
+    </div>
+  );
+}
+
+const features = [
+  {
+    title: 'Team Management',
+    description:
+      'Create and manage teams with ease. Add players, assign roles, and keep track of your roster.',
+    icon: '👥',
+  },
+  {
+    title: 'Match Scheduling',
+    description:
+      'Schedule matches, set locations, and notify participants automatically.',
+    icon: '📅',
+  },
+  {
+    title: 'Performance Analytics',
+    description:
+      'Track player statistics, generate reports, and make data-driven decisions.',
+    icon: '📊',
+  },
+  {
+    title: 'Tournament Brackets',
+    description:
+      'Organize tournaments with automatic bracket generation and real-time updates.',
+    icon: '🏆',
+  },
+  {
+    title: 'Training Plans',
+    description:
+      'Design training sessions, assign drills, and monitor player progress.',
+    icon: '🎯',
+  },
+  {
+    title: 'Communication Hub',
+    description:
+      'Keep everyone in the loop with built-in messaging and announcements.',
+    icon: '💬',
+  },
+];
