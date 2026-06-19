@@ -42,6 +42,7 @@
     --color-navbar: #1A3B61;
     --color-gold: #CFAB4B;
     --color-features: #E0F4FA;
+    --color-app-bg: #E0F4FA;
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
