@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@shared/components/ui/button';
 import { useAuth } from '@shared/contexts/AuthContext';
 import WaveDivider from '../components/WaveDivider';
+import ContactForm from '../components/ContactForm';
 import fondoLanding from '../../../assets/img/fondo_landing.png';
 
 export default function LandingPage() {
@@ -37,14 +38,6 @@ export default function LandingPage() {
             The all-in-one platform for sports management. Organize matches, track
             performance, and keep everyone connected.
           </p>
-          <div className="mt-8 flex gap-4">
-            <Button variant="gold" size="lg" asChild>
-              <Link to="/signup">Get Started</Link>
-            </Button>
-            <Button variant="gold" size="lg" asChild>
-              <Link to="/login">Log In</Link>
-            </Button>
-          </div>
         </section>
 
         <WaveDivider fill="#E0F4FA" />
@@ -77,6 +70,7 @@ export default function LandingPage() {
             <p className="mt-4 text-lg text-white/80">
               Have questions? Get in touch with our team.
             </p>
+            <ContactForm />
           </div>
         </section>
 

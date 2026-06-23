@@ -6,7 +6,6 @@ import {
   Field,
   FieldDescription,
   FieldGroup,
-  FieldLabel,
   FieldSeparator,
 } from "@shared/components/ui/field"
 import { Input } from "@shared/components/ui/input"
@@ -56,28 +55,25 @@ export function LoginForm({
               <span className="sr-only">Fantasy Team.</span>
             </a>
             <h1 className="text-xl font-bold text-white">Welcome to Fantasy Team Management.</h1>
-            <FieldDescription className="text-white/80">
-              Don&apos;t have an account? <a href="#">Sign up</a>
-            </FieldDescription>
           </div>
           <Field>
-          <FieldLabel htmlFor="username" className="text-white">Username</FieldLabel>
           <Input
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            placeholder="Username"
+            className="bg-features"
             required
           />
           </Field>
           <Field>
-            <FieldLabel htmlFor="password" className="text-white">Password</FieldLabel>
             <Input
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
-              placeholder="********"
+              placeholder="Password"
+              className="bg-features"
               required
             />
           </Field>
