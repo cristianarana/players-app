@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@shared/components/ui/button';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '@shared/contexts/AuthContext';
 import WaveDivider from '../components/WaveDivider';
 import ContactForm from '../components/ContactForm';
