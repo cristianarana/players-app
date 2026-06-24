@@ -14,7 +14,7 @@ import { UserModule } from '../users/user.module';
     JwtModule.registerAsync({
       global: true,
       useFactory: () => ({
-        secret: process.env.JWT_SECRET ?? 'super-secret-key',
+        secret: process.env.JWT_SECRET,
         signOptions: { expiresIn: (process.env.JWT_EXPIRES_IN ?? '24h') as any },
       }),
     }),
