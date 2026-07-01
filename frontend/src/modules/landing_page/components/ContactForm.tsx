@@ -1,18 +1,43 @@
 "use client"
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from '@shared/components/ui/button';
-import { Field, FieldGroup } from '@shared/components/ui/field';
+import { Field, FieldError, FieldGroup } from '@shared/components/ui/field';
 import { Input } from '@shared/components/ui/input';
 
 export default function ContactForm() {
   const [name, setNombre] = useState('');
   const [mail, setMail] = useState('');
   const [description, setConsulta] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ name, mail, description });
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, mail, description }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      toast.success('Message sent successfully!');
+      setNombre('');
+      setMail('');
+      setConsulta('');
+    } catch {
+      setError('Could not send your message. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,8 +74,9 @@ export default function ContactForm() {
             required
           />
         </Field>
-        <Button type="submit" variant="gold" className="mt-2 w-full">
-          Enviar
+        {error && <FieldError>{error}</FieldError>}
+        <Button type="submit" variant="gold" className="mt-2 w-full" disabled={loading}>
+          {loading ? 'Sending...' : 'Enviar'}
         </Button>
       </FieldGroup>
     </form>

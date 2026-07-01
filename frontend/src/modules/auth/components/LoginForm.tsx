@@ -5,6 +5,7 @@ import { Button } from "@shared/components/ui/button"
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldSeparator,
 } from "@shared/components/ui/field"
@@ -30,11 +31,11 @@ export function LoginForm({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response = await login({
+    const success = await login({
       username,
       password,
       });
-    if (response){
+    if (success){
       navigate('/dashboard');
     }
   };
@@ -80,11 +81,9 @@ export function LoginForm({
           <Field>
             {
               error && (
-              <FieldDescription
-                className="text-red-500"
-                >
+              <FieldError>
                 {error}
-              </FieldDescription>
+              </FieldError>
               )
             }
             <Button

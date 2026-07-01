@@ -3,7 +3,6 @@ import { login as loginService } from '../services/auth.service';
 import { useAuth } from '@shared/contexts/AuthContext';
 import type {
   LoginRequest,
-  LoginResponse,
 } from '../types/auth.types';
 
 export function useLogin() {
@@ -13,18 +12,15 @@ export function useLogin() {
 
   const login = async (
     credentials: LoginRequest,
-  ): Promise<LoginResponse | null> => {
+  ): Promise<boolean> => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await loginService(
-        credentials,
-      );
+      const response = await loginService(credentials);
+      authLogin(response.user);
 
-      authLogin(response.access_token);
-
-      return response;
+      return true;
     } catch (err) {
       setError(
         err instanceof Error
@@ -32,7 +28,7 @@ export function useLogin() {
           : 'Error al iniciar sesión',
       );
 
-      return null;
+      return false;
     } finally {
       setLoading(false);
     }
