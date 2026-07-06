@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../../users/services/user.service';
 import { LoginDto } from '../dto/login.dto';
+import { User } from '../../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +13,14 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto) {
-    const result = await this.userService.findByUsername(dto.username);
-    const user = result.data;
+    let user: User | undefined;
+
+    try {
+      const result = await this.userService.findByUsername(dto.username);
+      user = result.data;
+    } catch {
+      // User not found — handled below as invalid credentials
+    }
 
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -24,9 +31,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user.id, username: user.username, role: user.role };
+    const payload = { sub: user.id, username: user.username, role: user.role as string };
     const access_token = await this.jwtService.signAsync(payload);
 
-    return { access_token };
+    return {
+      user: { username: user.username, role: user.role },
+      access_token,
+    };
   }
 }

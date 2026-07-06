@@ -1,13 +1,18 @@
 import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { AuthProvider } from '@shared/contexts/AuthContext';
+import ErrorBoundary from '@shared/components/ErrorBoundary';
 import AppRouter from './routes/AppRouter';
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppRouter />
-      </AuthProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <AppRouter />
+          <Toaster position="top-right" richColors />
+        </AuthProvider>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }

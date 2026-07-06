@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, DeleteDateColumn } from 'typeorm';
 import { RoleType } from '../dto/role-type.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -9,6 +10,7 @@ export class User {
   @Column({ unique: true })
   username: string;
 
+  @Exclude()
   @Column()
   password: string;
 
