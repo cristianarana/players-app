@@ -8,7 +8,7 @@ export const databaseConfig: TypeOrmModuleAsyncOptions = {
     username: process.env.DB_USERNAME ?? 'postgres',
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE ?? 'players_app',
-    synchronize: false,
+    synchronize: true,
     autoLoadEntities: true,
   }),
 };
